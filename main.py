@@ -31,7 +31,8 @@ class webcrawler():
             change = item[6].getText("data-real-value")
             #print(time,price,open,high,low,vol,change)
             
-            self.record_str.append({'time':time_str,'price':price,'open':open,'high':high,'low':low,'vol':vol,'change':change})
+            #self.record_str.append({'time':time_str,'price':price,'open':open,'high':high,'low':low,'vol':vol,'change':change})
+            self.record_str.append([time_str,price,open,high,low,vol,change])
         result = self.list2json(self.record_str)
         return result   
 
@@ -44,7 +45,7 @@ class webcrawler():
         time_f = []
 
         for stock in self.record_str:
-            if datetime.strptime(stock['time'],'%Y-%m-%d %H:%M:%S') >= start and datetime.strptime(stock['time'],'%Y-%m-%d %H:%M:%S') <= end:
+            if datetime.strptime(stock[0],'%Y-%m-%d %H:%M:%S') >= start and datetime.strptime(stock[0],'%Y-%m-%d %H:%M:%S') <= end:
                 time_f.append(stock)
     
         return self.list2json(time_f)
@@ -56,6 +57,6 @@ if __name__ == "__main__":
     
     ss= webcrawler(url="https://cn.investing.com/equities/apple-computer-inc-historical-data")
     web = ss()
-    #print(web)
+    print(web)
     time = ss.time_filter("2021070100","2021072000")
     print(time)
